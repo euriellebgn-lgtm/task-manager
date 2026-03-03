@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
+document.addEventListener('DOMContentLoaded', function() { //Triggers after the HTML is parsed does not wait for images, CSS, or other resources to load. For Dom manipulation ASAP
+    // we get the elements with the matching id
     const themeSwitch = document.getElementById('theme-switch');
     const addTaskBtn = document.getElementById('add-task-btn');
     const addProjectBtn = document.getElementById('add-project-btn');
@@ -21,50 +21,48 @@ document.addEventListener('DOMContentLoaded', function() {
     const completedTasksCount = document.getElementById('completed-tasks-count');
     const pendingTasksCount = document.getElementById('pending-tasks-count');
     
-    // View buttons
     const allTasksBtn = document.getElementById('all-tasks');
     const todayTasksBtn = document.getElementById('today-tasks');
     const importantTasksBtn = document.getElementById('important-tasks');
     const completedTasksBtn = document.getElementById('completed-tasks');
     
-    // Sort modal elements
+    // Sort modal 
     const applySortBtn = document.getElementById('apply-sort-btn');
     
-    // State
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    // Convertir la chaîne JSON en un objet JavaScript: .parse; getItem: Pour lire une donnée stockée
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || []; //localStorage: API JavaScript pour stocker des données directement dans le navigateur; persistent même après la fermeture du navigateur.
     let projects = JSON.parse(localStorage.getItem('projects')) || [];
     let currentView = 'all';
     let currentSort = { by: 'dueDate', order: 'asc' };
     let currentFilters = { priority: 'all', date: 'all' };
     let searchQuery = '';
     
-    // Initialize the app
+    // Initialize the app after loading the DOM
     init();
     
     function init() {
-        // Load theme preference
+        // Theme preference
         const savedTheme = localStorage.getItem('theme') || 'light';
         setTheme(savedTheme);
         themeSwitch.checked = savedTheme === 'dark';
         
         // Load tasks and projects
-        renderTasks();
+        renderTasks(); //Clears the current list on the screen and replace from the updated list(for new tasks or projects). 
         renderProjects();
-        updateStats();
+        updateStats(); //updates the HTML elements with the latest values.
         
-        // Set up event listeners
         setupEventListeners();
     }
     
     function setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-theme', theme); //adds the custom label <html data-theme="dark">
         localStorage.setItem('theme', theme);
     }
     
     function setupEventListeners() {
         // Theme toggle
         themeSwitch.addEventListener('change', function() {
-            setTheme(this.checked ? 'dark' : 'light');
+            setTheme(this.checked ? 'dark' : 'light'); //dark if checked, light if not
         });
         
         // Modal open buttons
@@ -75,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Modal close buttons
         closeBtns.forEach(btn => {
             btn.addEventListener('click', function() {
-                const modal = this.closest('.modal');
+                const modal = this.closest('.modal'); //look at the button parent, then its grandparent, etc until it finds a .modal
                 modal.style.display = 'none';
             });
         });
@@ -149,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
             taskDueDateInput.value = today;
         }
         
-        // Populate projects dropdown
         populateProjectDropdown();
         
         taskModal.style.display = 'flex';
@@ -627,4 +624,5 @@ document.addEventListener('DOMContentLoaded', function() {
     function generateId() {
         return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
+
 });
