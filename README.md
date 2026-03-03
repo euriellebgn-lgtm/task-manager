@@ -51,5 +51,5 @@ Technologies Used
 
 -LocalStorage for persistent data
 
-Coding process
+Coding process: 
 As it was the first project i did after i got my web design certification, it was part of my learning process and i used few online source codes. I draw a simple sketch of the layout, then i made the html and css, but i looked for some of the JS functions.
